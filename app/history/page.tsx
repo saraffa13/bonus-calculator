@@ -1,19 +1,15 @@
-import { getCalcs } from "@/app/actions";
 import { HistoryTable } from "@/components/HistoryTable";
 
-export const dynamic = "force-dynamic";
-
-export default async function HistoryPage() {
-  const rows = await getCalcs();
+export default function HistoryPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">History</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          All your saved calculations.
+    <div className="flex flex-col gap-stack_gap">
+      <div className="mb-gutter">
+        <h1 className="text-h1 text-on-background mb-1">History</h1>
+        <p className="text-body-base text-on-surface-variant">
+          Your last 5 saved calculations (stored locally in this browser).
         </p>
       </div>
-      <HistoryTable rows={rows} />
+      <HistoryTable />
     </div>
   );
 }

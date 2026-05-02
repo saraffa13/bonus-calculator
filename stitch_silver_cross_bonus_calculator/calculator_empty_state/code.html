@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Silver Cross Bonus Calculator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c4c1fb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#313034",
+                        "secondary-fixed-dim": "#c0c1ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-secondary-container": "#fffbff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#371a00",
+                        "surface-variant": "#e5e1e6",
+                        "tertiary-fixed-dim": "#f1bc91",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#181445",
+                        "on-tertiary-container": "#ae7f59",
+                        "surface-container-highest": "#e5e1e6",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f1ecf2",
+                        "primary": "#070235",
+                        "on-primary-container": "#8683ba",
+                        "primary-fixed": "#e3dfff",
+                        "surface-container-high": "#ebe7ec",
+                        "secondary-container": "#6063ee",
+                        "on-surface": "#1c1b1f",
+                        "surface-dim": "#dcd9de",
+                        "on-tertiary-fixed": "#2e1500",
+                        "surface": "#fcf8fd",
+                        "surface-bright": "#fcf8fd",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#07006c",
+                        "on-background": "#1c1b1f",
+                        "inverse-primary": "#c4c1fb",
+                        "outline-variant": "#c8c5d0",
+                        "outline": "#787680",
+                        "background": "#fcf8fd",
+                        "primary-container": "#1e1b4b",
+                        "tertiary": "#160700",
+                        "secondary-fixed": "#e1e0ff",
+                        "surface-container-low": "#f6f2f7",
+                        "on-secondary-fixed-variant": "#2f2ebe",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-tertiary-fixed-variant": "#633e1e",
+                        "secondary": "#4648d4",
+                        "surface-tint": "#5b598c",
+                        "inverse-on-surface": "#f3eff4",
+                        "on-surface-variant": "#47464f",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "card_padding": "24px",
+                        "stack_gap": "12px",
+                        "element_height": "40px",
+                        "gutter": "16px",
+                        "container_max_width": "1024px",
+                        "section_margin": "32px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "currency": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-base": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "currency": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "h1": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .shadow-soft {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-base antialiased">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none w-full top-0 sticky z-50">
+<div class="flex justify-between items-center h-16 max-w-[1024px] mx-auto px-4 md:px-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="text-lg font-bold text-slate-900 dark:text-slate-50 tracking-wide font-['Inter'] antialiased">Silver Cross Bonus Calculator</span>
+</div>
+<div class="flex items-end h-full gap-8">
+<a class="font-['Inter'] text-sm antialiased tracking-tight text-indigo-900 dark:text-indigo-400 font-bold border-b-2 border-indigo-900 dark:border-indigo-400 pb-4 mt-4 cursor-pointer active:opacity-80 transition-opacity" href="#">
+                    Calculator
+                </a>
+<a class="font-['Inter'] text-sm antialiased tracking-tight text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-slate-100 transition-colors hover:text-indigo-900 dark:hover:text-indigo-300 transition-all duration-200 cursor-pointer active:opacity-80 pb-4 mt-4 border-b-2 border-transparent" href="#">
+                    History
+                </a>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-[1024px] mx-auto px-4 md:px-8 py-[32px]">
+<!-- Header Section -->
+<header class="mb-[32px]">
+<h1 class="font-h1 text-h1 text-on-surface">Calculator</h1>
+<p class="font-body-base text-body-base text-on-surface-variant mt-2">Enter product details to calculate the final deal structure.</p>
+</header>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
+<!-- Left Card: Deal Details -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-[24px] shadow-soft">
+<h2 class="font-h3 text-h3 text-on-surface mb-[24px]">Deal Details</h2>
+<form class="space-y-[24px]">
+<!-- Product Selection -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Pick a product</label>
+<div class="relative">
+<select class="w-full h-[40px] px-3 appearance-none bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
+<option disabled="" selected="" value="">Select from catalog...</option>
+<option value="prod1">Amoxicillin 500mg</option>
+<option value="prod2">Ibuprofen 400mg</option>
+<option value="prod3">Omeprazole 20mg</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-outline">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Product name</label>
+<input class="w-full h-[40px] px-3 bg-surface border border-outline-variant rounded text-on-surface-variant font-body-sm text-body-sm cursor-not-allowed opacity-70" disabled="" placeholder="Auto-filled" type="text"/>
+</div>
+</div>
+<hr class="border-t border-outline-variant"/>
+<!-- Pricing & Quantities -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-[16px]">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Base Price</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="font-currency text-currency text-outline">₹</span>
+</div>
+<input class="w-full h-[40px] pl-8 pr-3 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-currency text-currency focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Paid Goods (Qty)</label>
+<input class="w-full h-[40px] px-3 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="0" type="number"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Free Goods (Qty)</label>
+<input class="w-full h-[40px] px-3 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="0" type="number"/>
+</div>
+</div>
+<!-- Optional Modifiers -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Additional Discount (%)</label>
+<div class="relative">
+<input class="w-full h-[40px] pl-3 pr-8 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="0" type="number"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="font-body-sm text-body-sm text-outline">%</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Tax / GST (%)</label>
+<div class="relative">
+<input class="w-full h-[40px] pl-3 pr-8 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="0" type="number"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="font-body-sm text-body-sm text-outline">%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex justify-end pt-[12px]">
+<button class="h-[40px] px-6 bg-primary text-on-primary font-body-sm text-body-sm font-medium rounded hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" type="button">
+<span class="material-symbols-outlined text-[20px]">calculate</span>
+                            Calculate Deal
+                        </button>
+</div>
+</form>
+</div>
+<!-- Right Card: Result (Empty State) -->
+<div class="lg:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-[24px] shadow-soft flex flex-col min-h-[300px]">
+<h2 class="font-h3 text-h3 text-on-surface mb-[24px] border-b border-outline-variant pb-4">Result</h2>
+<div class="flex-1 flex flex-col items-center justify-center text-center px-4">
+<div class="w-16 h-16 bg-surface rounded-full flex items-center justify-center mb-4 border border-outline-variant">
+<span class="material-symbols-outlined text-outline text-[32px]">receipt_long</span>
+</div>
+<p class="font-body-base text-body-base text-on-surface-variant max-w-[200px]">
+                        Enter price and quantities to see the breakdown.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

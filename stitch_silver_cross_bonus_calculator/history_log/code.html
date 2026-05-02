@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Silver Cross Bonus Calculator - History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#c4c1fb",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#313034",
+                      "secondary-fixed-dim": "#c0c1ff",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#444173",
+                      "on-secondary-container": "#fffbff",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#371a00",
+                      "surface-variant": "#e5e1e6",
+                      "tertiary-fixed-dim": "#f1bc91",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#181445",
+                      "on-tertiary-container": "#ae7f59",
+                      "surface-container-highest": "#e5e1e6",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#f1ecf2",
+                      "primary": "#070235",
+                      "on-primary-container": "#8683ba",
+                      "primary-fixed": "#e3dfff",
+                      "surface-container-high": "#ebe7ec",
+                      "secondary-container": "#6063ee",
+                      "on-surface": "#1c1b1f",
+                      "surface-dim": "#dcd9de",
+                      "on-tertiary-fixed": "#2e1500",
+                      "surface": "#fcf8fd",
+                      "surface-bright": "#fcf8fd",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#07006c",
+                      "on-background": "#1c1b1f",
+                      "inverse-primary": "#c4c1fb",
+                      "outline-variant": "#c8c5d0",
+                      "outline": "#787680",
+                      "background": "#fcf8fd",
+                      "primary-container": "#1e1b4b",
+                      "tertiary": "#160700",
+                      "secondary-fixed": "#e1e0ff",
+                      "surface-container-low": "#f6f2f7",
+                      "on-secondary-fixed-variant": "#2f2ebe",
+                      "tertiary-fixed": "#ffdcc2",
+                      "on-tertiary-fixed-variant": "#633e1e",
+                      "secondary": "#4648d4",
+                      "surface-tint": "#5b598c",
+                      "inverse-on-surface": "#f3eff4",
+                      "on-surface-variant": "#47464f",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "card_padding": "24px",
+                      "stack_gap": "12px",
+                      "element_height": "40px",
+                      "gutter": "16px",
+                      "container_max_width": "1024px",
+                      "section_margin": "32px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "currency": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "currency": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-base min-h-screen antialiased flex flex-col">
+<!-- TopNavBar Shared Component -->
+<header class="bg-white dark:bg-slate-900 font-['Inter'] text-sm antialiased tracking-tight docked full-width top-0 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none w-full sticky z-50">
+<div class="flex justify-between items-center h-16 max-w-[1024px] mx-auto px-4 md:px-8">
+<div class="text-lg font-bold text-slate-900 dark:text-slate-50 tracking-wide">
+                Silver Cross Bonus Calculator
+            </div>
+<nav class="hidden md:flex gap-6 h-full items-end pb-0">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-slate-100 transition-colors pb-4 mt-4 hover:text-indigo-900 dark:hover:text-indigo-300 transition-all duration-200 cursor-pointer active:opacity-80 transition-opacity" href="#">
+                    Calculator
+                </a>
+<a class="text-indigo-900 dark:text-indigo-400 font-bold border-b-2 border-indigo-900 dark:border-indigo-400 pb-4 mt-4 hover:text-indigo-900 dark:hover:text-indigo-300 transition-all duration-200 cursor-pointer active:opacity-80 transition-opacity" href="#">
+                    History
+                </a>
+</nav>
+<div class="md:hidden flex items-center">
+<button class="text-slate-500 hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1024px] mx-auto px-4 md:px-8 py-section_margin">
+<!-- Header Section -->
+<div class="mb-section_margin flex flex-col md:flex-row md:items-end justify-between gap-stack_gap">
+<div>
+<h1 class="font-h1 text-h1 text-primary mb-1">History</h1>
+<p class="font-body-base text-body-base text-on-surface-variant">All your saved calculations.</p>
+</div>
+<div class="w-full md:w-[360px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full h-element_height pl-10 pr-4 bg-surface-container-lowest border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none text-on-surface font-body-base text-body-base placeholder:text-outline-variant transition-colors" placeholder="Search by product name…" type="text" value="cross"/>
+</div>
+</div>
+<!-- Data Table Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.03)] border border-surface-variant overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-surface-variant">
+<th class="py-4 pl-card_padding pr-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold">Date</th>
+<th class="py-4 px-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold">Product</th>
+<th class="py-4 px-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold">Deal</th>
+<th class="py-4 px-4 text-right font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold">Total Paid</th>
+<th class="py-4 px-4 text-right font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-semibold">Per-Unit</th>
+<th class="py-4 pr-card_padding pl-4 w-[60px]"></th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<!-- Highlighted Search Result Row -->
+<tr class="border-b border-surface-variant hover:bg-surface transition-colors bg-secondary-fixed-dim/10">
+<td class="py-4 pl-card_padding pr-4 text-on-surface-variant">4 May 2026, 11:42 AM</td>
+<td class="py-4 px-4 font-semibold text-primary">Cofcross DX</td>
+<td class="py-4 px-4">
+<span class="bg-surface-container-high px-2 py-1 rounded text-label-caps font-label-caps text-on-surface-variant">16+4</span>
+</td>
+<td class="py-4 px-4 text-right font-currency text-currency">₹<span class="font-bold">4,250</span>.00</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-primary font-medium">₹<span class="font-bold">212</span>.50</td>
+<td class="py-4 pr-card_padding pl-4 text-right">
+<button class="text-outline hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<!-- Standard Rows -->
+<tr class="border-b border-surface-variant hover:bg-surface transition-colors">
+<td class="py-4 pl-card_padding pr-4 text-on-surface-variant">2 May 2026, 09:15 AM</td>
+<td class="py-4 px-4 font-semibold">Silverox 500mg</td>
+<td class="py-4 px-4">
+<span class="bg-surface-container-high px-2 py-1 rounded text-label-caps font-label-caps text-on-surface-variant">10+2</span>
+</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant">₹<span class="font-bold">1,800</span>.00</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant font-medium">₹<span class="font-bold">150</span>.00</td>
+<td class="py-4 pr-card_padding pl-4 text-right">
+<button class="text-outline hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface transition-colors">
+<td class="py-4 pl-card_padding pr-4 text-on-surface-variant">1 May 2026, 04:30 PM</td>
+<td class="py-4 px-4 font-semibold">Crossifen Gel</td>
+<td class="py-4 px-4">
+<span class="bg-surface-container-high px-2 py-1 rounded text-label-caps font-label-caps text-on-surface-variant">20+5</span>
+</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant">₹<span class="font-bold">2,100</span>.00</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant font-medium">₹<span class="font-bold">84</span>.00</td>
+<td class="py-4 pr-card_padding pl-4 text-right">
+<button class="text-outline hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface transition-colors">
+<td class="py-4 pl-card_padding pr-4 text-on-surface-variant">28 Apr 2026, 10:20 AM</td>
+<td class="py-4 px-4 font-semibold">Neutracross Tab</td>
+<td class="py-4 px-4">
+<span class="bg-surface-container-high px-2 py-1 rounded text-label-caps font-label-caps text-on-surface-variant">30+10</span>
+</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant">₹<span class="font-bold">5,400</span>.00</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant font-medium">₹<span class="font-bold">135</span>.00</td>
+<td class="py-4 pr-card_padding pl-4 text-right">
+<button class="text-outline hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="py-4 pl-card_padding pr-4 text-on-surface-variant">25 Apr 2026, 02:45 PM</td>
+<td class="py-4 px-4 font-semibold">SilverDerm Cream</td>
+<td class="py-4 px-4">
+<span class="bg-surface-container-high px-2 py-1 rounded text-label-caps font-label-caps text-on-surface-variant">12+3</span>
+</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant">₹<span class="font-bold">1,260</span>.00</td>
+<td class="py-4 px-4 text-right font-currency text-currency text-on-surface-variant font-medium">₹<span class="font-bold">84</span>.00</td>
+<td class="py-4 pr-card_padding pl-4 text-right">
+<button class="text-outline hover:text-error transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination simple -->
+<div class="border-t border-surface-variant bg-surface-container-lowest px-card_padding py-3 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 5 of 42 entries</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded border border-surface-variant flex items-center justify-center text-outline hover:bg-surface-container hover:text-on-surface transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded border border-surface-variant flex items-center justify-center text-outline hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,18 +1,9 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { formatINR } from "@/lib/utils";
-import { saveCalc } from "@/app/actions";
+import { useEffect, useMemo, useState } from "react";
 import { ProductPicker } from "@/components/ProductPicker";
+import { addHistory } from "@/lib/history";
+import { formatINR } from "@/lib/utils";
 import type { Product } from "@/lib/store";
 
 export function CalculatorForm() {
@@ -24,18 +15,14 @@ export function CalculatorForm() {
   const [mrp, setMrp] = useState("");
   const [selected, setSelected] = useState<Product | null>(null);
   const [savedMsg, setSavedMsg] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
 
   const handleSelectProduct = (p: Product) => {
     setSelected(p);
     setProductName(p.name);
     setItemPrice(p.ptr.toString());
-    if (p.scheme_paid != null) setQtyPaid(String(p.scheme_paid));
-    else setQtyPaid("");
-    if (p.scheme_free != null) setQtyFree(String(p.scheme_free));
-    else setQtyFree("");
-    if (p.mrp != null) setMrp(String(p.mrp));
-    else setMrp("");
+    setQtyPaid(p.scheme_paid != null ? String(p.scheme_paid) : "");
+    setQtyFree(p.scheme_free != null ? String(p.scheme_free) : "");
+    setMrp(p.mrp != null ? String(p.mrp) : "");
   };
 
   const numItemPrice = parseFloat(itemPrice) || 0;
@@ -47,219 +34,305 @@ export function CalculatorForm() {
 
   const result = useMemo(() => {
     const totalReceived = numPaid + numFree;
-    if (totalReceived <= 0 || numTotal <= 0) {
-      return null;
-    }
+    if (totalReceived <= 0 || numTotal <= 0) return null;
     const perUnit = numTotal / totalReceived;
     const perUnitWithGst = perUnit * (1 + numGst / 100);
     const totalSavings = numMrp > 0 ? numMrp * totalReceived - numTotal : 0;
-    const discountPct =
-      numMrp > 0 ? ((numMrp - perUnit) / numMrp) * 100 : 0;
-    return {
-      totalReceived,
-      perUnit,
-      perUnitWithGst,
-      totalSavings,
-      discountPct,
-    };
+    const discountPct = numMrp > 0 ? ((numMrp - perUnit) / numMrp) * 100 : 0;
+    return { totalReceived, perUnit, perUnitWithGst, totalSavings, discountPct };
   }, [numTotal, numPaid, numFree, numGst, numMrp]);
 
-  const canSave =
-    !!productName.trim() && !!result && numPaid > 0 && numTotal > 0;
+  const canSave = !!productName.trim() && !!result && numPaid > 0 && numTotal > 0;
+
+  useEffect(() => {
+    if (!savedMsg) return;
+    const t = setTimeout(() => setSavedMsg(null), 2500);
+    return () => clearTimeout(t);
+  }, [savedMsg]);
 
   const handleSave = () => {
     if (!canSave || !result) return;
-    setSavedMsg(null);
-    startTransition(async () => {
-      await saveCalc({
-        productName: productName.trim(),
-        totalPrice: numTotal,
-        qtyPaid: numPaid,
-        qtyFree: numFree,
-        gstPercent: numGst,
-        perUnitPrice: result.perUnit,
-      });
-      setSavedMsg("Saved to history.");
-      setTimeout(() => setSavedMsg(null), 2500);
+    addHistory({
+      product_name: productName.trim(),
+      total_price: numTotal,
+      qty_paid: numPaid,
+      qty_free: numFree,
+      gst_percent: numGst,
+      per_unit_price: result.perUnit,
     });
+    setSavedMsg("Saved to history.");
   };
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Deal details</CardTitle>
-          <CardDescription>
-            Enter the offer to get the real per-unit price.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Field label="Pick a product">
-            <ProductPicker
-              value={productName}
-              onSelect={handleSelectProduct}
-            />
-          </Field>
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
+      {/* Left card: Deal Details */}
+      <div className="md:col-span-7 bg-surface-container-lowest rounded-xl border border-outline-variant p-card_padding shadow-card flex flex-col gap-stack_gap">
+        {savedMsg && (
+          <div className="bg-secondary-fixed text-on-secondary-fixed-variant px-4 py-3 rounded-lg flex items-center gap-3 border border-secondary-fixed-dim border-opacity-30">
+            <span className="material-symbols-outlined icon-fill text-on-secondary-fixed-variant text-[20px]">
+              check_circle
+            </span>
+            <span className="text-body-sm font-medium">{savedMsg}</span>
+          </div>
+        )}
 
-          <Field label="Product name">
-            <Input
-              placeholder="e.g. Maggi Noodles"
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-5">
+          <div className="sm:col-span-2">
+            <Label>Product</Label>
+            <ProductPicker value={productName} onSelect={handleSelectProduct} />
+          </div>
+
+          <div className="sm:col-span-2">
+            <Label>Product name</Label>
+            <TextInput
               value={productName}
-              onChange={(e) => {
-                setProductName(e.target.value);
+              onChange={(v) => {
+                setProductName(v);
                 setSelected(null);
               }}
+              placeholder="e.g. Cofcross DX"
             />
-          </Field>
+          </div>
 
-          <Field label="Price per item (₹)">
-            <Input
+          <div>
+            <Label>Price (₹)</Label>
+            <TextInput
               type="number"
-              inputMode="decimal"
-              min={0}
-              placeholder="100"
               value={itemPrice}
-              onChange={(e) => setItemPrice(e.target.value)}
+              onChange={setItemPrice}
+              placeholder="45.20"
             />
-          </Field>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Quantity paid for">
-              <Input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="3"
-                value={qtyPaid}
-                onChange={(e) => setQtyPaid(e.target.value)}
-              />
-            </Field>
-            <Field label="Quantity free">
-              <Input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="3"
-                value={qtyFree}
-                onChange={(e) => setQtyFree(e.target.value)}
-              />
-            </Field>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="GST % (optional)">
-              <Input
+          <div>
+            <Label>MRP (₹)</Label>
+            <TextInput
+              type="number"
+              value={mrp}
+              onChange={setMrp}
+              placeholder="60.00"
+            />
+          </div>
+
+          <div>
+            <Label>Quantity Paid</Label>
+            <TextInput
+              type="number"
+              value={qtyPaid}
+              onChange={setQtyPaid}
+              placeholder="16"
+            />
+          </div>
+
+          <div>
+            <Label>Quantity Free</Label>
+            <TextInput
+              type="number"
+              value={qtyFree}
+              onChange={setQtyFree}
+              placeholder="4"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <Label>GST (%)</Label>
+            <div className="relative w-full sm:w-1/2 sm:pr-2">
+              <TextInput
                 type="number"
-                inputMode="decimal"
-                min={0}
-                placeholder="0"
                 value={gst}
-                onChange={(e) => setGst(e.target.value)}
-              />
-            </Field>
-            <Field label="MRP per unit (optional)">
-              <Input
-                type="number"
-                inputMode="decimal"
-                min={0}
+                onChange={setGst}
                 placeholder="0"
-                value={mrp}
-                onChange={(e) => setMrp(e.target.value)}
               />
-            </Field>
+              <span className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 text-body-base text-outline pointer-events-none">
+                %
+              </span>
+            </div>
           </div>
+        </div>
 
-          <div className="flex items-center gap-3 pt-2">
-            <Button
-              onClick={handleSave}
-              disabled={!canSave || isPending}
-            >
-              {isPending ? "Saving..." : "Save Calculation"}
-            </Button>
-            {savedMsg && (
-              <span className="text-sm text-green-600">{savedMsg}</span>
-            )}
-          </div>
+        <div className="flex items-center gap-3 pt-2">
+          <button
+            onClick={handleSave}
+            disabled={!canSave}
+            className="h-element_height px-5 rounded-lg bg-primary text-on-primary text-body-sm font-semibold tracking-tight transition-shadow hover:shadow-card disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Save Calculation
+          </button>
+        </div>
 
-          {selected && <ProductDetails product={selected} />}
-        </CardContent>
-      </Card>
+        {selected && <ProductDetails product={selected} />}
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Result</CardTitle>
-          <CardDescription>
-            {numPaid > 0 && numFree >= 0
-              ? `Buy ${numPaid} Get ${numFree} Free`
+      {/* Right card: Result */}
+      <div className="md:col-span-5 bg-surface-container-lowest rounded-xl border border-outline-variant p-card_padding shadow-card flex flex-col h-full relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+
+        <div className="border-b border-outline-variant pb-4 mb-5 mt-2">
+          <h2 className="text-h2 text-primary">
+            {numPaid > 0 || numFree > 0
+              ? `Buy ${numPaid || 0} Get ${numFree || 0} Free`
               : "Live breakdown"}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {result ? (
-            <div className="space-y-3">
-              <Row
-                label="Total price paid"
-                value={formatINR(numTotal)}
+          </h2>
+          <p className="text-body-sm text-on-surface-variant mt-1">
+            Calculation Breakdown
+          </p>
+        </div>
+
+        {result ? (
+          <>
+            <div className="flex flex-col gap-4 flex-grow">
+              <BreakdownRow
+                label="Total price"
+                value={<Currency value={numTotal} />}
               />
-              <Row
-                label="Total products received"
-                value={`${result.totalReceived}`}
+              <BreakdownRow
+                label="Total products"
+                value={
+                  <span className="text-body-base text-on-surface font-semibold">
+                    {result.totalReceived}
+                  </span>
+                }
               />
-              <Row
-                label="Effective price per product"
-                value={formatINR(result.perUnit)}
-                highlight
+
+              <div className="flex flex-col items-center justify-center bg-surface-container p-5 rounded-lg my-2 border border-outline-variant border-opacity-50">
+                <span className="text-label-caps text-on-surface-variant uppercase mb-1">
+                  Effective Price
+                </span>
+                <div className="text-currency text-primary text-[32px] leading-[40px] tracking-tight">
+                  <Currency value={result.perUnit} bold />
+                </div>
+              </div>
+
+              <BreakdownRow
+                label={`Per product with ${numGst || 0}% GST`}
+                value={<Currency value={result.perUnitWithGst} />}
               />
-              <Row
-                label={`Per product (incl. ${numGst}% GST)`}
-                value={formatINR(result.perUnitWithGst)}
-              />
+
               {numMrp > 0 && (
                 <>
-                  <Row
-                    label="Total savings vs MRP"
-                    value={formatINR(result.totalSavings)}
+                  <BreakdownRow
+                    label="Total savings"
+                    value={
+                      <span className="text-currency text-secondary">
+                        <Currency value={result.totalSavings} bold inheritColor />
+                      </span>
+                    }
                   />
-                  <Row
-                    label="Discount %"
-                    value={`${result.discountPct.toFixed(2)}%`}
+                  <BreakdownRow
+                    label="Discount"
+                    value={
+                      <span className="text-body-base text-secondary font-semibold">
+                        {result.discountPct.toFixed(2)}%
+                      </span>
+                    }
+                    last
                   />
                 </>
               )}
-              <div className="mt-4 rounded-md bg-muted p-3 text-xs text-muted-foreground">
-                {formatINR(numTotal)} ÷ {result.totalReceived} ={" "}
-                {formatINR(result.perUnit)} per unit
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <div className="bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-2 inline-flex items-center gap-2 text-body-sm font-medium border border-primary-fixed-dim">
+                <span className="material-symbols-outlined text-[16px]">
+                  functions
+                </span>
+                <span>
+                  {formatINR(numTotal)} ÷ {result.totalReceived} ={" "}
+                  {formatINR(result.perUnit)} per unit
+                </span>
               </div>
             </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              Enter price and quantities to see the breakdown.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+          </>
+        ) : (
+          <p className="text-body-sm text-on-surface-variant">
+            Enter price and quantities to see the breakdown.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <label className="block space-y-1.5">
-      <span className="text-sm font-medium">{label}</span>
+    <label className="text-label-caps text-on-surface-variant uppercase mb-2 block">
       {children}
     </label>
   );
 }
 
+function TextInput({
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  type?: string;
+}) {
+  return (
+    <input
+      type={type}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="w-full h-element_height px-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+    />
+  );
+}
+
+function BreakdownRow({
+  label,
+  value,
+  last,
+}: {
+  label: string;
+  value: React.ReactNode;
+  last?: boolean;
+}) {
+  return (
+    <div
+      className={
+        "flex justify-between items-center" +
+        (last
+          ? ""
+          : " border-b border-outline-variant border-opacity-40 pb-3")
+      }
+    >
+      <span className="text-body-base text-on-surface-variant">{label}</span>
+      {value}
+    </div>
+  );
+}
+
+function Currency({
+  value,
+  bold,
+  inheritColor,
+}: {
+  value: number;
+  bold?: boolean;
+  inheritColor?: boolean;
+}) {
+  const [whole, decimal] = value.toFixed(2).split(".");
+  const wholeFmt = parseInt(whole, 10).toLocaleString("en-IN");
+  return (
+    <span
+      className={
+        "text-currency " + (inheritColor ? "" : "text-on-surface")
+      }
+    >
+      ₹<span className={bold ? "font-bold" : "font-bold"}>{wholeFmt}</span>.
+      {decimal}
+    </span>
+  );
+}
+
 function ProductDetails({ product }: { product: Product }) {
-  const items: { label: string; value: string | number | null }[] = [
-    { label: "SC code", value: product.sc_code },
+  const items: { label: string; value: string | null }[] = [
+    { label: "SC Code", value: product.sc_code },
     { label: "Division", value: product.division },
     { label: "Composition", value: product.composition },
     { label: "Form", value: product.form },
@@ -272,41 +345,21 @@ function ProductDetails({ product }: { product: Product }) {
   ].filter((i) => i.value != null && i.value !== "");
 
   return (
-    <div className="mt-4 rounded-md border bg-muted/40 p-4">
-      <h3 className="text-sm font-semibold mb-2">{product.name}</h3>
-      <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+    <div className="mt-4 bg-surface-container-low rounded-lg p-4 border border-outline-variant border-opacity-50">
+      <div className="flex items-center gap-2 mb-3 text-on-surface-variant">
+        <span className="material-symbols-outlined text-[18px]">info</span>
+        <span className="text-label-caps uppercase">Product Data</span>
+      </div>
+      <div className="grid grid-cols-2 gap-y-2 gap-x-4">
         {items.map((i) => (
-          <div key={i.label} className="flex gap-2">
-            <dt className="text-muted-foreground min-w-20">{i.label}:</dt>
-            <dd className="font-medium break-words">{i.value as React.ReactNode}</dd>
+          <div key={i.label}>
+            <span className="text-body-sm text-outline block">{i.label}</span>
+            <span className="text-body-sm text-on-surface font-medium break-words">
+              {i.value}
+            </span>
           </div>
         ))}
-      </dl>
-    </div>
-  );
-}
-
-function Row({
-  label,
-  value,
-  highlight,
-}: {
-  label: string;
-  value: string;
-  highlight?: boolean;
-}) {
-  return (
-    <div className="flex items-baseline justify-between border-b border-dashed pb-2 last:border-0">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <span
-        className={
-          highlight
-            ? "text-xl font-semibold text-primary"
-            : "text-base font-medium"
-        }
-      >
-        {value}
-      </span>
+      </div>
     </div>
   );
 }

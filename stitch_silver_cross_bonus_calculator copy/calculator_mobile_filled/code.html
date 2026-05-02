@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calculator - Mobile (Filled)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fcf8fd",
+                    "surface-container-highest": "#e5e1e6",
+                    "on-background": "#1c1b1f",
+                    "primary": "#070235",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "on-surface-variant": "#47464f",
+                    "surface-container": "#f1ecf2",
+                    "on-tertiary-container": "#ae7f59",
+                    "on-secondary-container": "#fffbff",
+                    "on-primary-container": "#8683ba",
+                    "tertiary-fixed-dim": "#f1bc91",
+                    "surface-container-low": "#f6f2f7",
+                    "primary-container": "#1e1b4b",
+                    "tertiary-container": "#371a00",
+                    "secondary-container": "#6063ee",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdcc2",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e5e1e6",
+                    "secondary": "#4648d4",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f3eff4",
+                    "tertiary": "#160700",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#07006c",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "outline": "#787680",
+                    "secondary-fixed": "#e1e0ff",
+                    "on-error-container": "#93000a",
+                    "background": "#fcf8fd",
+                    "surface-bright": "#fcf8fd",
+                    "outline-variant": "#c8c5d0",
+                    "on-tertiary-fixed-variant": "#633e1e",
+                    "on-tertiary-fixed": "#2e1500",
+                    "primary-fixed": "#e3dfff",
+                    "surface-dim": "#dcd9de",
+                    "surface-container-high": "#ebe7ec",
+                    "on-surface": "#1c1b1f",
+                    "inverse-primary": "#c4c1fb",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#444173",
+                    "surface-tint": "#5b598c",
+                    "primary-fixed-dim": "#c4c1fb",
+                    "inverse-surface": "#313034",
+                    "on-primary-fixed": "#181445"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "section_margin": "32px",
+                    "gutter": "16px",
+                    "card_padding": "24px",
+                    "container_max_width": "1024px",
+                    "stack_gap": "12px",
+                    "element_height": "40px"
+            },
+            "fontFamily": {
+                    "body-base": ["Inter"],
+                    "h1": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "h3": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h2": ["Inter"],
+                    "currency": ["Inter"]
+            },
+            "fontSize": {
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "currency": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base antialiased md:hidden pb-24">
+<!-- Top Navigation -->
+<nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm w-full">
+<div class="flex justify-between items-center h-16 w-full px-4">
+<div class="text-lg font-bold text-slate-900 tracking-wide font-h3 text-h3">
+                Silver Cross Bonus Calculator
+            </div>
+<!-- Hamburger menu for mobile navigation -->
+<button class="text-slate-500 hover:text-slate-900 focus:outline-none">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="w-full px-4 pt-6 pb-8 space-y-6">
+<!-- Deal Details Card -->
+<section class="bg-white rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.03)] border border-slate-200 overflow-hidden">
+<div class="p-card_padding border-b border-slate-200">
+<h2 class="font-h3 text-h3 text-slate-900">Deal Details</h2>
+<p class="font-body-sm text-body-sm text-slate-500 mt-1">Select product and enter quantities.</p>
+</div>
+<div class="p-card_padding space-y-6">
+<!-- Product Selection -->
+<div class="space-y-2">
+<label class="block font-body-sm text-body-sm font-medium text-slate-700">Product</label>
+<div class="relative">
+<select class="w-full h-element_height pl-3 pr-10 bg-white border border-slate-200 rounded-DEFAULT focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none font-body-base text-body-base">
+<option value="amoxicillin">Amoxicillin 500mg (Box of 100)</option>
+<option value="ibuprofen">Ibuprofen 400mg</option>
+<option value="paracetamol">Paracetamol 500mg</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-slate-500">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Product Info Panel (Condensed for Mobile) -->
+<div class="bg-surface-container-low rounded-DEFAULT p-4 border border-surface-container-highest">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-sm text-body-sm text-slate-500">Base Price (PTR)</span>
+<span class="font-currency text-currency text-slate-900">₹<span class="font-bold">450</span>.00</span>
+</div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-sm text-body-sm text-slate-500">MRP</span>
+<span class="font-currency text-currency text-slate-900">₹<span class="font-bold">600</span>.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-slate-500">Stock Available</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                            High (1250 units)
+                        </span>
+</div>
+</div>
+<!-- Quantities Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="block font-body-sm text-body-sm font-medium text-slate-700">Order Qty (Paid)</label>
+<input class="w-full h-element_height px-3 bg-white border border-slate-200 rounded-DEFAULT focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-base text-body-base" type="number" value="100"/>
+</div>
+<div class="space-y-2">
+<label class="block font-body-sm text-body-sm font-medium text-slate-700">Bonus Qty (Free)</label>
+<input class="w-full h-element_height px-3 bg-white border border-slate-200 rounded-DEFAULT focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-base text-body-base" type="number" value="20"/>
+</div>
+</div>
+<!-- Discount & GST -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="block font-body-sm text-body-sm font-medium text-slate-700">Trade Disc. (%)</label>
+<input class="w-full h-element_height px-3 bg-white border border-slate-200 rounded-DEFAULT focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-base text-body-base" type="number" value="5"/>
+</div>
+<div class="space-y-2">
+<label class="block font-body-sm text-body-sm font-medium text-slate-700">GST (%)</label>
+<input class="w-full h-element_height px-3 bg-white border border-slate-200 rounded-DEFAULT focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-base text-body-base" type="number" value="12"/>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-card_padding py-4 border-t border-slate-200 flex space-x-3">
+<button class="flex-1 h-element_height bg-white border border-slate-200 text-slate-700 rounded-DEFAULT font-body-sm text-body-sm font-medium hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    Clear
+                </button>
+<button class="flex-1 h-element_height bg-primary text-white rounded-DEFAULT font-body-sm text-body-sm font-medium hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    Calculate
+                </button>
+</div>
+</section>
+<!-- Result Card -->
+<section class="bg-primary-fixed rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.03)] border border-primary-fixed-dim overflow-hidden relative">
+<!-- Decorative background element -->
+<div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-10 pointer-events-none"></div>
+<div class="p-card_padding">
+<h2 class="font-h3 text-h3 text-on-primary-fixed mb-6">Calculation Results</h2>
+<!-- Hero Metric: Effective Price -->
+<div class="bg-white rounded-lg p-4 mb-6 shadow-sm flex flex-col items-center justify-center text-center">
+<span class="font-body-sm text-body-sm text-slate-500 uppercase tracking-wide mb-1">Effective Price per Unit</span>
+<div class="font-currency text-currency text-primary text-3xl">
+                        ₹<span class="font-bold text-4xl">394</span>.50
+                    </div>
+<div class="mt-2 text-sm text-emerald-600 font-medium flex items-center bg-emerald-50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px] mr-1" data-icon="trending_down">trending_down</span>
+                        12.3% below PTR
+                    </div>
+</div>
+<!-- Detailed Breakdown -->
+<div class="space-y-4">
+<h3 class="font-body-base text-body-base font-semibold text-on-primary-fixed border-b border-primary-fixed-dim pb-2">Financial Breakdown</h3>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-primary-fixed-variant">Gross Value (100 units)</span>
+<span class="font-currency text-currency text-on-primary-fixed">₹<span class="font-bold">45,000</span>.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-primary-fixed-variant">Trade Discount (5%)</span>
+<span class="font-currency text-currency text-error">-₹<span class="font-bold">2,250</span>.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-primary-fixed-variant">Net Taxable Value</span>
+<span class="font-currency text-currency text-on-primary-fixed">₹<span class="font-bold">42,750</span>.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-primary-fixed-variant">GST (12%)</span>
+<span class="font-currency text-currency text-on-primary-fixed">+₹<span class="font-bold">5,130</span>.00</span>
+</div>
+<div class="border-t border-primary-fixed-dim pt-4 mt-2">
+<div class="flex justify-between items-center">
+<span class="font-body-base text-body-base font-bold text-on-primary-fixed">Total Invoice Value</span>
+<span class="font-currency text-currency text-on-primary-fixed text-lg">₹<span class="font-bold text-xl">47,880</span>.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary px-card_padding py-4 flex justify-end">
+<button class="h-element_height px-6 bg-white text-primary rounded-DEFAULT font-body-sm text-body-sm font-semibold hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white flex items-center">
+<span class="material-symbols-outlined mr-2 text-[20px]" data-icon="save">save</span>
+                    Save Calculation
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile only) -->
+<div class="fixed bottom-0 w-full bg-white border-t border-slate-200 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center justify-center w-full h-full text-indigo-900 font-bold border-t-2 border-indigo-900 pt-1 -mt-[1px]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calculate" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="font-label-caps text-label-caps text-[10px]">Calculator</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-slate-500 font-medium hover:text-slate-900 transition-colors pt-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history">history</span>
+<span class="font-label-caps text-label-caps text-[10px]">History</span>
+</a>
+</div>
+</div>
+</body></html>
