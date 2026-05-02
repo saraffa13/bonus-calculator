@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Test-Path *)"
+      "PowerShell(Test-Path *)",
+      "PowerShell(node scripts/export-products.js)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(npm uninstall *)"
     ]
   }
 }

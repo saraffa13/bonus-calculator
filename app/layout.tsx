@@ -3,7 +3,7 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bonus Calculator",
+  title: "Silver Cross Bonus Calculator",
   description: "Calculate effective per-unit price for Buy X Get Y Free deals",
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
         <header className="border-b bg-white">
           <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
             <Link href="/" className="text-lg font-semibold tracking-tight">
-              ₹ Bonus Calculator
+              Silver Cross Bonus Calculator
             </Link>
             <nav className="flex gap-1 text-sm">
               <Link

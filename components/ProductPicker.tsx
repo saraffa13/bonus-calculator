@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { searchProducts } from "@/app/actions";
-import type { Product } from "@/lib/db";
+import type { Product } from "@/lib/store";
 
 export function ProductPicker({
   value,

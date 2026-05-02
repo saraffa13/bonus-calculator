@@ -13,7 +13,7 @@ import {
 import { formatINR } from "@/lib/utils";
 import { saveCalc } from "@/app/actions";
 import { ProductPicker } from "@/components/ProductPicker";
-import type { Product } from "@/lib/db";
+import type { Product } from "@/lib/store";
 
 export function CalculatorForm() {
   const [productName, setProductName] = useState("");

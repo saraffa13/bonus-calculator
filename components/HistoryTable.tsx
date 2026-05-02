@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatINR } from "@/lib/utils";
-import type { Calculation } from "@/lib/db";
+import type { Calculation } from "@/lib/store";
 import { deleteCalc } from "@/app/actions";
 
 export function HistoryTable({ rows }: { rows: Calculation[] }) {
@@ -70,7 +70,7 @@ export function HistoryTable({ rows }: { rows: Calculation[] }) {
             {filtered.map((r) => (
               <TableRow key={r.id}>
                 <TableCell className="whitespace-nowrap text-muted-foreground">
-                  {new Date(r.created_at + "Z").toLocaleString("en-IN", {
+                  {new Date(r.created_at).toLocaleString("en-IN", {
                     dateStyle: "medium",
                     timeStyle: "short",
                   })}
