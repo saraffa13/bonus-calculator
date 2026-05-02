@@ -69,9 +69,20 @@ export function CalculatorForm() {
       <div className="md:col-span-7 bg-surface-container-lowest rounded-xl border border-outline-variant p-card_padding shadow-card flex flex-col gap-stack_gap">
         {savedMsg && (
           <div className="bg-secondary-fixed text-on-secondary-fixed-variant px-4 py-3 rounded-lg flex items-center gap-3 border border-secondary-fixed-dim border-opacity-30">
-            <span className="material-symbols-outlined icon-fill text-on-secondary-fixed-variant text-[20px]">
-              check_circle
-            </span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="9 12 11 14 15 10" />
+            </svg>
             <span className="text-body-sm font-medium">{savedMsg}</span>
           </div>
         )}
@@ -233,9 +244,7 @@ export function CalculatorForm() {
 
             <div className="mt-8 flex justify-center">
               <div className="bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-2 inline-flex items-center gap-2 text-body-sm font-medium border border-primary-fixed-dim">
-                <span className="material-symbols-outlined text-[16px]">
-                  functions
-                </span>
+                <span aria-hidden="true">∑</span>
                 <span>
                   {formatINR(numTotal)} ÷ {result.totalReceived} ={" "}
                   {formatINR(result.perUnit)} per unit
@@ -347,7 +356,21 @@ function ProductDetails({ product }: { product: Product }) {
   return (
     <div className="mt-4 bg-surface-container-low rounded-lg p-4 border border-outline-variant border-opacity-50">
       <div className="flex items-center gap-2 mb-3 text-on-surface-variant">
-        <span className="material-symbols-outlined text-[18px]">info</span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
         <span className="text-label-caps uppercase">Product Data</span>
       </div>
       <div className="grid grid-cols-2 gap-y-2 gap-x-4">

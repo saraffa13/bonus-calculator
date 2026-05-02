@@ -11,7 +11,19 @@ const links = [
 export function TopNav() {
   const pathname = usePathname();
   return (
-    <header className="bg-white border-b border-outline-variant shadow-sm w-full sticky top-0 z-50">
+    <header className="w-full sticky top-0 z-50">
+      <div className="bg-primary text-on-primary text-center text-[12px] font-semibold tracking-wide py-1.5 px-3">
+        Created by{" "}
+        <a
+          href="https://aidbranding.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-inverse-primary decoration-2 underline-offset-2 hover:text-inverse-primary transition-colors"
+        >
+          aidbranding.com
+        </a>
+      </div>
+      <div className="bg-white border-b border-outline-variant shadow-sm">
       <div className="flex justify-between items-center h-16 max-w-container_max_width mx-auto px-4 md:px-8">
         <div className="text-lg font-bold text-primary tracking-wide">
           Silver Cross Bonus Calculator
@@ -35,6 +47,7 @@ export function TopNav() {
             );
           })}
         </nav>
+      </div>
       </div>
     </header>
   );

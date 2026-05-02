@@ -64,9 +64,20 @@ export function ProductPicker({
           }}
           className="w-full h-element_height pl-3 pr-10 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-base text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
         />
-        <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
-          expand_more
-        </span>
+        <svg
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </div>
 
       {open && (
