@@ -1,0 +1,7 @@
+node_modules
+.next
+out
+*.db
+*.sqlite
+.env*.local
+.DS_Store
